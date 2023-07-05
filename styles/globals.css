@@ -1,0 +1,14 @@
+
+.btn{
+    height: 30px;
+    width: 30px;
+    border: 1px solid black;
+    color: red;
+    cursor: pointer;
+}
+.count{
+    height: 30px;
+    width: 30px;
+    border: 1px solid black;
+    color: blue;
+}
