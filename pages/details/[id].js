@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import Router from "next/router";
 export async function getServerSideProps(context) {
   const id = context.query.id;
+
   return {
     props: {
       id: id || null,
@@ -18,26 +20,29 @@ const Details = (props) => {
 
   const fetchCountryData = async (id) => {
     try {
-      const response = await fetch("https://restcountries.com/v3.1/all");
+      const response = await fetch(
+        `https://restcountries.com/v3.1/alpha/${id}`
+      );
+      const res = await fetch("https://restcountries.com/v3.1/all");
 
       const data = await response.json();
-
-      const country = data?.filter((elem) => elem?.name?.common === id);
+      const Country_data = await res.json();
 
       const neighbourCountry = [];
 
-      data
+      data[0]?.borders?.map((elem) => {
+        let obj = Country_data?.filter((item) => item?.cca3 === elem);
 
-        ?.filter((elem) => elem?.name?.common === id)[0]
-        ?.borders?.map((elem) => {
-          let obj = data?.filter((item) => item?.cca3 === elem);
+        if (obj?.length > 0) {
+          neighbourCountry?.push(obj[0]);
+        }
+      });
 
-          if (obj?.length > 0) {
-            neighbourCountry?.push(obj[0]);
-          }
-        });
-
-      setCountryData(country[0]);
+      if (data?.length>0) {
+        setCountryData(data[0]);
+      } else{
+        Router.push("/404")
+      }
 
       setNeighbourCountryData(neighbourCountry);
 
@@ -49,20 +54,23 @@ const Details = (props) => {
     }
   };
   return (
-    
-      <div className="container-fluid">
-        <div className="detail">
-          <div className="row mx-0 my-0 px-0 py-0">
-            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 mx-0 my-0 px-0 py-0"></div>
-            <div className="col-lg-10 col-md-10 col-sm-8 col-xs-10 mx-0 my-0 px-0 py-0">
-              <div className="row my-1 mx-1 mt-2">
-                <h3 className="mt-4">{countryData?.name?.common}</h3>
-                <div className="showdiv">
+    <div className="container-fluid">
+      <div className="detail">
+        <div className="row mx-0 my-0 px-0 py-0">
+          <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 mx-0 my-0 px-0 py-0"></div>
+          <div className="col-lg-10 col-md-10 col-sm-8 col-xs-10 mx-0 my-0 px-0 py-0">
+            <div className="row my-1 mx-1 mt-2">
+              <h3 className="mt-4">{countryData?.name?.common}</h3>
+              <div className="showdiv">
                 <div className="col-lg-6 col-11 my-3  country-img">
                   {countryData &&
                     countryData.flags &&
                     countryData.flags.png && (
-                      <img src={countryData.flags.png} className="detail-img  col-12 mx-0 px-0" alt="" />
+                      <img
+                        src={countryData.flags.png}
+                        className="detail-img  "
+                        alt=""
+                      />
                     )}
                 </div>
                 <div className="col-lg-5 col-11 mt-0 country-all">
@@ -103,22 +111,22 @@ const Details = (props) => {
                       : "-"}
                   </p>
                 </div>
-                </div>
-            
               </div>
             </div>
-            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 mx-0 my-0 px-0 py-0"></div>
           </div>
+          <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 mx-0 my-0 px-0 py-0"></div>
         </div>
+      </div>
 
+      {neighbourCountryData?.length > 0 ? (
         <div className="row">
           <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
           <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10">
             <div>
               <h4>Neighbour Countries</h4>
 
-              <div className="row my-2 mx-2  border border-dark">
-                <div className=" my-2 d-flex flex-wrap justify-content-between">
+              <div className="row my-2 mx-2  border border-lightdark">
+                <div className=" my-1 d-flex flex-wrap justify-content-between">
                   {neighbourCountryData?.map((elem) => {
                     return (
                       <img
@@ -133,8 +141,8 @@ const Details = (props) => {
             </div>
           </div>
         </div>
-      </div>
-    
+      ) : null}
+    </div>
   );
 };
 
