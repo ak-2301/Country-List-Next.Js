@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
-
+import CountryListItem from "@/components/CountryListItem";
 export default function index() {
   const [countries, setCountries] = useState([]);
-
   const [countriesSearch, setCountriesSearch] = useState([]);
 
   useEffect(() => {
@@ -15,7 +13,7 @@ export default function index() {
       const response = await fetch("https://restcountries.com/v3.1/all");
 
       const data = await response.json();
-
+      
       const filteredData = [];
 
       data?.map((elem) => {
@@ -95,73 +93,24 @@ export default function index() {
 
         filteredData?.push(obj);
       });
-
       // console.log(data);
-
       setCountries(filteredData);
-
       setCountriesSearch(filteredData);
+      return {
+        props: {
+          countries,
+        },
+      };
     } catch (error) {
       console.error("Error fetching data:", error);
+      return {
+        props: {
+          countries: [],
+        },
+      };
     }
   };
-  const currentDate = new Date();
-
-  // Get the day, month, year, hours, and minutes from the Date object
-  const day = currentDate.getDate();
-  const monthIndex = currentDate.getMonth();
-  const year = currentDate.getFullYear();
-  const hours = currentDate.getHours();
-  const minutes = currentDate.getMinutes();
-
-  // Array of month names
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  // Format the day with appropriate suffix (e.g., "23rd")
-  const formattedDay = day + getDaySuffix(day);
-
-  // Get the month name
-  const month = monthNames[monthIndex];
-
-  // Format the time with leading zeros if needed
-  const formattedHours = hours.toString().padStart(2, "0");
-  const formattedMinutes = minutes.toString().padStart(2, "0");
-
-  // Construct the final formatted date and time string
-  const formattedDateTime = `${formattedDay} ${month} ${year}, ${formattedHours}:${formattedMinutes}`;
-
-  // Function to get the day suffix (e.g., "23rd")
-  function getDaySuffix(day) {
-    if (day >= 11 && day <= 13) {
-      return "th";
-    }
-
-    const lastDigit = day % 10;
-    switch (lastDigit) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
-  }
-
+  
   const searchCountry = (value) => {
     const countriesData = countriesSearch;
 
@@ -201,49 +150,12 @@ export default function index() {
           </div>
         </div>
 
-        {console.log(countries, "countries Vsis")}
+        {/* {console.log(countries, "countries Vsis")} */}
 
         <div className="container">
-          {countries?.map((elem) => {
+          {countries?.map((country,elem) => {
             return (
-              <div className="box">
-                <div className="img-box">
-                  <img src={elem.flags.svg} alt="" />
-                </div>
-
-                <div className="country-info">
-                  <h6>{elem?.name?.common}</h6>
-
-                  <p>
-                    Currencies :
-                    {elem?.currencies
-                      ? Object.values(elem.currencies).join(", ")
-                      : "-"}
-                  </p>
-
-                  <p>Current date and time : {`${formattedDateTime}`}</p>
-
-                  <button className="showmapbtn">
-                    <Link
-                      href={elem.maps.googleMaps}
-                      target="_blank"
-                      className="showfont"
-                    >
-                      Show Map
-                    </Link>
-                  </button>
-
-                  <button className="showmapbtn">
-                    <Link
-                      href={`/${elem?.name?.common}/details`}
-                      target="_blank"
-                      className="showfont"
-                    >
-                      Details
-                    </Link>
-                  </button>
-                </div>
-              </div>
+              <CountryListItem key={elem} country={country}/>
             );
           })}
         </div>
@@ -251,3 +163,181 @@ export default function index() {
     </>
   );
 }
+
+
+
+
+// import React, { useState} from 'react';
+// import Link from 'next/link';
+// import moment from "moment-timezone";
+//   const [countries, setCountries] = useState([]);
+//   const [countriesSearch, setCountriesSearch] = useState([]);
+
+//   const getDateTimeInTimeZone = (timeZone) => {
+//     const dateTimeInTimeZone = moment()
+//       .tz(timeZone)
+//       .format("DD MMM YYYY, HH:mm");
+
+//     return dateTimeInTimeZone;
+//   };
+
+//     const searchCountry = (value) => {
+//     const countriesData = countriesSearch;
+
+//     countriesData?.map((elem) => {
+//       if (value) {
+//         if (elem?.name?.common?.toLowerCase().includes(value?.toLowerCase())) {
+//           elem.visibility = true;
+//         } else {
+//           elem.visibility = false;
+//         }
+//       } else {
+//         elem.visibility = true;
+//       }
+//     });
+
+//     const countriesData2 = countriesData?.filter(
+//       (elem) => elem?.visibility === true
+//     );
+
+//     setCountries(countriesData2);
+//   };
+// const Index=({countries})=>{
+//   return (
+//       <>
+//         <div>
+//           <div className="countryheading">
+//             <h2>Countries</h2>
+//           </div>
+  
+//           <div>
+//             <div className="search">
+//               <input
+//                 type="text"
+//                 placeholder="Search countries"
+//                 onChange={(event) => searchCountry(event.target.value)}
+//               />
+//             </div>
+//           </div>
+  
+//           {/* {console.log(countries, "countries Vsis")} */}
+  
+//           <div className="container">
+//             {countries?.map((elem) => {
+//               return (
+//                 <div className="box">
+//                   <div className="img-box">
+//                     <img src={elem.flags.svg} alt="" className="index-img" />
+//                   </div>
+  
+//                   <div className="country-info">
+//                     <h5>{elem?.name?.common}</h5>
+//                     <p className="currencyindex">
+//                       Currency :
+//                       {elem?.currencies
+//                         ? Object.values(elem.currencies).join(", ")
+//                         : "-"}
+//                     </p>
+//                     <p>
+//                       Current date and time:{" "}
+//                       {getDateTimeInTimeZone(elem.timezones[0])}
+//                     </p>{" "}
+//                     {/* Use the first time zone in the 'timezones' array */}
+//                     {/* <p>Current date and time : {`${formattedDateTime} ${elem.timezones[0]}`}</p> */}
+//                     <button className="showmapbtn">
+//                       <Link
+//                         href={elem.maps.googleMaps}
+//                         target="_blank"
+//                         className="showfont"
+//                       >
+//                         Show Map
+//                       </Link>
+//                     </button>
+//                     <button className="showmapbtn">
+//                       <Link
+//                         href={`/${elem?.name?.common}/details`}
+//                         target="_blank"
+//                         className="showfont"
+//                       >
+//                         Details
+//                       </Link>
+//                     </button>
+//                   </div>
+//                 </div>
+//               );
+//             })}
+//           </div>
+//         </div>
+//       </>
+//     );
+// }
+// export default Index;
+
+
+// export const getServerSideProps = async () => {
+//   const res = await fetch("https://restcountries.com/v3.1/all");
+//   const countries = await res.json();
+//   return {
+//     props: {
+//       countries,
+//     },
+//   };
+// };
+
+
+// const currentDate = new Date();
+
+  // // Get the day, month, year, hours, and minutes from the Date object
+  // const day = currentDate.getDate();
+  // const monthIndex = currentDate.getMonth();
+  // const year = currentDate.getFullYear();
+  // const hours = currentDate.getHours();
+  // const minutes = currentDate.getMinutes();
+
+  // // Array of month names
+  // const monthNames = [
+  //   "Jan",
+  //   "Feb",
+  //   "Mar",
+  //   "Apr",
+  //   "May",
+  //   "Jun",
+  //   "Jul",
+  //   "Aug",
+  //   "Sep",
+  //   "Oct",
+  //   "Nov",
+  //   "Dec",
+  // ];
+
+  // // Format the day with appropriate suffix (e.g., "23rd")
+  // const formattedDay = day + getDaySuffix(day);
+
+  // // Get the month name
+  // const month = monthNames[monthIndex];
+
+  // // Format the time with leading zeros if needed
+  // const formattedHours = hours.toString().padStart(2, "0");
+  // const formattedMinutes = minutes.toString().padStart(2, "0");
+
+  // // Construct the final formatted date and time string
+  // const formattedDateTime = `${formattedDay} ${month} ${year}`;
+
+  // // Function to get the day suffix (e.g., "23rd")
+  // function getDaySuffix(day) {
+  //   if (day >= 11 && day <= 13) {
+  //     return "th";
+  //   }
+
+  //   const lastDigit = day % 10;
+  //   switch (lastDigit) {
+  //     case 1:
+  //       return "st";
+  //     case 2:
+  //       return "nd";
+  //     case 3:
+  //       return "rd";
+  //     default:
+  //       return "th";
+  //   }
+  // }

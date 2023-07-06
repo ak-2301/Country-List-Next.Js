@@ -1,14 +1,9 @@
 .countryheading {
   font-size: 3rem;
-
   font-weight: 600;
-
   text-align: center;
-
   margin-right: 350px;
-
   margin-top: 80px;
-
   .country {
     font-size: 2rem;
   }
@@ -20,19 +15,12 @@
 
 input[type="text"] {
   width: 478px; /* Adjust the width as needed */
-
   padding: 8px;
-
   border: 1px solid lightgray;
-
   margin-right: 5px;
-
   background-image: url("https://tse3.mm.bing.net/th?id=OIP.UcEnmjkins9Evx4EGa6PIgHaHa&pid=Api&P=0&h=180"); /* Path to your search icon image */
-
   background-repeat: no-repeat;
-
   background-position: right center;
-
   background-size: 35px; /* Adjust the size of the icon */
 }
 
@@ -45,59 +33,55 @@ input[type="text"] {
 
   .box {
     width: 30rem;
-
-    height: 10rem;
-
+    height: 9rem;
     border: 1px solid grey;
-
     margin: auto;
-
     margin-bottom: 10px;
-
+    padding-top: 0;
     display: flex;
   }
 
   .img-box {
-    height: 7rem;
-
-    width: 14rem;
-
+    height: 5rem;
+    width: 65%;
     padding-left: 10px;
-
-    padding-top: 10px;
-
     margin-top: 10px;
-
     display: flex;
+  }
+  .index-img{
+    height: 115px;
+    width: 160px;
   }
 
   .country-info {
-    margin-top: 10px;
-
-    width: 16rem;
-
+    width: 100%;
     font-size: 13px;
+  }
+  .country-info h5{
+    margin-bottom: 0;
+    margin-top: 20px;
+  }
+  .currencyindex{
+    margin-top: 3px;
+  }
+  .country-info p{
+    margin-bottom: 6px;
+    font-weight: 600;
   }
 
   .showmapbtn {
-    width: 6rem;
-
+    width: 7.2rem;
+    font-weight: bold;
     height: 2rem;
-
     background-color: white;
-
-    border: 3px solid blue;
-
+    border: 2px solid blue;
     border-radius: 0;
-
     margin-right: 10px;
   }
 
   .showfont {
     color: blue;
-
     font-size: 14px;
-
     text-decoration : none;
   }
 }

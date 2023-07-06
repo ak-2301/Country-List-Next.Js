@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 export async function getServerSideProps(context) {
   const id = context.query.id;
-
   return {
     props: {
       id: id || null,
