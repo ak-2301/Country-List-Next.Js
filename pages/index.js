@@ -13,7 +13,7 @@ export default function index() {
       const response = await fetch("https://restcountries.com/v3.1/all");
 
       const data = await response.json();
-      
+      console.log(data);
       const filteredData = [];
 
       data?.map((elem) => {
@@ -153,7 +153,7 @@ export default function index() {
         <div className="container">
           {countries?.map((country,elem) => {
             return (
-              <CountryListItem key={elem} country={country}/>
+              <CountryListItem country={country}/>
             );
           })}
         </div>

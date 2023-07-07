@@ -42,7 +42,7 @@ input[type="text"] {
   }
 
   .img-box {
-    height: 5rem;
+    height: fit-content;
     width: 65%;
     padding-left: 10px;
     margin-top: 10px;
@@ -92,4 +92,9 @@ input[type="text"] {
 }
 .showdiv{
   display: flex;
+}
+
+.error_page{
+  font-size: 40px;
+  text-align: center;
 }
