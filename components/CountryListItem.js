@@ -75,7 +75,7 @@ const getTimeDate = (timezone) => {
 
 
 const CountryListItem = ({ country }) => {
-  const [countries, setCountries] = useState([]);
+  // const [countries, setCountries] = useState([]);
   return (
     <div>
       <div className="box">

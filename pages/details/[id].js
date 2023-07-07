@@ -3,20 +3,23 @@ import Router from "next/router";
 
 
 export async function getServerSideProps(context) {
+
   const id = context.query.id;
-  const response = await fetch(
+
+  const result = await fetch(
     `https://restcountries.com/v3.1/alpha/${context.query.id}`
   );
   const response2 = await fetch("https://restcountries.com/v3.1/all");
 
-  const data = await response.json();
-  const data2 = await response2.json();
+  const particular_country_data = await result.json();
+
+  const all_country_data = await response2.json();
 
   return {
     props: {
       id: id || null,
-      data: data || null,
-      data2: data2 || null,
+      particular_country_data: particular_country_data || null,
+      all_country_data: all_country_data || null,
     },
   };
 }
@@ -27,8 +30,8 @@ const Details = (props) => {
 
   useEffect(() => {
     fetchCountryData(props?.id);
-    if (props?.data?.length > 0) {
-      setCountryData(props?.data[0]);
+    if (props?.particular_country_data?.length > 0) {
+      setCountryData(props?.particular_country_data[0]);
     } else {
       Router.push("/404");
     }
@@ -72,11 +75,11 @@ const Details = (props) => {
     try {
       const neighbourCountry = [];
 
-      props?.data[0]?.borders?.map((elem) => {
-        let obj = props?.data2?.filter((item) => item?.cca3 === elem);
+      props?.particular_country_data[0]?.borders?.map((elem) => {
+        let count_obj = props?.all_country_data?.filter((item) => item?.cca3 === elem);
 
-        if (obj?.length > 0) {
-          neighbourCountry?.push(obj[0]);
+        if (count_obj?.length > 0) {
+          neighbourCountry?.push(count_obj[0]);
         }
       });
       setNeighbourCountryData(neighbourCountry);
