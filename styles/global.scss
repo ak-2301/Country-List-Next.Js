@@ -42,15 +42,16 @@ input[type="text"] {
   }
 
   .img-box {
-    height: fit-content;
+    // height: fit-content;
+    height: 100%;
     width: 65%;
-    padding-left: 10px;
-    margin-top: 10px;
     display: flex;
+    padding-left: 10px;
   }
   .index-img{
     height: 115px;
-    width: 160px;
+    width: 170px;
+    padding-top: 15px;
   }
 
   .country-info {
@@ -92,9 +93,22 @@ input[type="text"] {
 }
 .showdiv{
   display: flex;
+  width: 100%;
 }
 
 .error_page{
   font-size: 40px;
   text-align: center;
+}
+.neighbour-country-img{
+  width: 300px;
+  height: 200px;
+  padding-right:10px;
+}
+.detail-img{
+  width: 520px;
+  height: 320px;
+}
+.details-about-country{
+  padding-left: 0;
 }

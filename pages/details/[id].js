@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import Router from "next/router";
 
-
 export async function getServerSideProps(context) {
-
   const id = context.query.id;
 
   const result = await fetch(
@@ -76,7 +74,9 @@ const Details = (props) => {
       const neighbourCountry = [];
 
       props?.particular_country_data[0]?.borders?.map((elem) => {
-        let count_obj = props?.all_country_data?.filter((item) => item?.cca3 === elem);
+        let count_obj = props?.all_country_data?.filter(
+          (item) => item?.cca3 === elem
+        );
 
         if (count_obj?.length > 0) {
           neighbourCountry?.push(count_obj[0]);
@@ -100,7 +100,7 @@ const Details = (props) => {
             <div className="row my-1 mx-1 mt-2">
               <h3 className="mt-4">{countryData?.name?.common}</h3>
               <div className="showdiv">
-                <div className="col-lg-6 col-11 my-3  country-img">
+                <div className="col-lg-8 col-md-10 my-3  country-img">
                   {countryData &&
                     countryData.flags &&
                     countryData.flags.png && (
@@ -111,48 +111,50 @@ const Details = (props) => {
                       />
                     )}
                 </div>
-                <div className="col-lg-5 col-11 mt-0 country-all">
-                  {/* <p>Native Name: {countryData?.name?.native?.official}</p> */}
-
-                  <p className="mt-3">Capital: {countryData?.capital}</p>
-
-                  <p>Population: {countryData?.population}</p>
-
-                  <p>Region: {countryData?.region}</p>
-
-                  {console.log(countryData, "Country Data")}
-
-                  <p>Subregion: {countryData?.subregion}</p>
-
-                  <p>Area: {countryData?.area} km²</p>
-
-                  <p>Country Code: {countryData?.cca2}</p>
-
-                  <p>
-                    Languages:{" "}
-                    {countryData?.languages
-                      ? Object.values(countryData.languages).join(", ")
-                      : "-"}
-                  </p>
-
-                  <p>
-                    Currencies:{" "}
-                    {countryData?.currencies
+                <div className="col-11 mt-0 country-all">
+                  {/* <p>Native Name: {countryData?.currencies
                       ? Object.values(countryData.currencies)[0].name
-                      : "-"}
-                  </p>
+                      : "-"}</p> */}
+                  <div className="details-about-country">
+                    <p className="mt-3">Capital: {countryData?.capital}</p>
 
-                  <p>
-                    Timezones:{" "}
-                    {countryData?.timezones
-                      ? countryData.timezones.join(", ")
-                      : "-"}
-                  </p>
+                    <p>Population: {countryData?.population}</p>
+
+                    <p>Region: {countryData?.region}</p>
+
+                    {console.log(countryData, "Country Data")}
+
+                    <p>Subregion: {countryData?.subregion}</p>
+
+                    <p>Area: {countryData?.area} km²</p>
+
+                    <p>Country Code: {countryData?.cca2}</p>
+
+                    <p>
+                      Languages:{" "}
+                      {countryData?.languages
+                        ? Object.values(countryData.languages).join(", ")
+                        : "-"}
+                    </p>
+
+                    <p>
+                      Currencies:{" "}
+                      {countryData?.currencies
+                        ? Object.values(countryData.currencies)[0].name
+                        : "-"}
+                    </p>
+
+                    <p>
+                      Timezones:{" "}
+                      {countryData?.timezones
+                        ? countryData.timezones.join(", ")
+                        : "-"}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 mx-0 my-0 px-0 py-0"></div>
         </div>
       </div>
 
